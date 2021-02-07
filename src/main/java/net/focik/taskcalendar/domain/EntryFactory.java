@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 class EntryFactory {
+
     CustomerClient customerClient;
 
     public ICalendarEntry createCalendarEntry(){
