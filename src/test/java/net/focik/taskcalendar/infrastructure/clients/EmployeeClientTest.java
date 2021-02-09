@@ -43,7 +43,7 @@ class EmployeeClientTest {
         final Integer id = 1;
 
         //given
-        TeamDto teamDto = employeeClientMock.findTeamById(id).get();
+        TeamDto teamDto = employeeClient.findTeamById(id).get();
 
         //then
         assertEquals(id, teamDto.getId());
