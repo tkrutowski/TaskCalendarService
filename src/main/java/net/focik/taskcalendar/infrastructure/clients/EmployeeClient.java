@@ -10,6 +10,7 @@ import java.util.Optional;
 @Component
 public class EmployeeClient {
     private RestTemplate restTemplate = new RestTemplate();
+    //TODO dodać stałą z propertisów
     private static final String URI = "http://localhost:8082/api/team/";
 
     public Optional<TeamDto> findTeamById(Integer id) {

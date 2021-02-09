@@ -11,8 +11,9 @@ import java.util.Optional;
 public
 class CustomerClient {
 
-    //    private ICustomerDtoRepository clientDtoRepository;
     private RestTemplate restTemplate = new RestTemplate();
+
+    //TODO dodać stałą z propertisów
     private static final String URI = "http://localhost:8081/api/customer/";
 
     public Optional<CustomerDto> findById(Integer id) {
@@ -20,7 +21,7 @@ class CustomerClient {
         try {
             customerDto = restTemplate.getForObject(URI + id, CustomerDto.class);
         }catch (RestClientException ex){
-            //TODO może rzucić wyjątek
+            //TODO może rzucić wyjątek albo legger error
             return Optional.empty();
         }
 
