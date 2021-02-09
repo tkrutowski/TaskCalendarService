@@ -1,7 +1,7 @@
 package net.focik.taskcalendar.infrastructure.clients;
 
+import net.focik.taskcalendar.domain.port.IGasConnectionRepository;
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
-import net.focik.taskcalendar.infrastructure.dto.TeamDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -9,8 +9,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Optional;
 
 @Component
-public class GasConnectionClient {
+public class GasConnectionRepositoryAdapter implements IGasConnectionRepository {
+
     private RestTemplate restTemplate = new RestTemplate();
+
+    //TODO dodać stałą z propertisów
     private static final String URI = "http://localhost:8082/api/team/";
 
     public Optional<GasConnectionDto> findGasConnectionById(Integer id) {

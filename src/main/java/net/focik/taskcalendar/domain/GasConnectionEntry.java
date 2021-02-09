@@ -1,8 +1,8 @@
 package net.focik.taskcalendar.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.focik.taskcalendar.domain.share.GasCabinetProviderType;
 import net.focik.taskcalendar.domain.share.MailStatus;
@@ -10,25 +10,29 @@ import net.focik.taskcalendar.domain.share.TaskType;
 
 import java.time.LocalDate;
 
-//@Builder
-//@NoArgsConstructor
 @Setter
 @Getter
+@Builder(access = AccessLevel.PACKAGE)
 class GasConnectionEntry implements ICalendarEntry {
     private Integer idEntry;
     private Integer idTask;
     private Integer idTeam;
     private TaskType taskType;
     private LocalDate date;
-    private Address address;
-//    private string Adres2 { get; set; }//gazociag 2 linie
-    private GasCabinetProviderType gasCabinetProvider;
-    private boolean isPgn;
-    private String info;
-    private MailStatus sentMailToSurveyor;
-    private MailStatus sentMailToCustomer;
+    private String message;
+
     private MailStatus sentMailPgn;
+    private LocalDate dateSentMailPgn;
+
+    private MailStatus sentMailToSurveyor;
+    private LocalDate dateSentMailToSurveyor;
+
+    private LocalDate dateSentMailToCustomer;
+    private MailStatus sentMailToCustomer;
+
     private Integer idSurveyor;
     private Integer idCustomer;
+    private Address address;
+    private GasCabinetProviderType gasCabinetProvider;
     private String taskNo;
 }

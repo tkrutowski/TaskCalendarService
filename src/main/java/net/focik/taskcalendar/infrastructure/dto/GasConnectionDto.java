@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.focik.taskcalendar.domain.share.GasCabinetProviderType;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +16,6 @@ public class GasConnectionDto {
     private Integer idSurveyor;
     private String taskNo;
     private boolean isPgn;
-    private String gasCabinetProvider;
-
+    private GasCabinetProviderType gasCabinetProvider;
+    private AddressDto address;
 }
