@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Builder(access = AccessLevel.PACKAGE)
-class GasConnectionEntry implements ICalendarEntry {
+public class GasConnectionEntry implements ICalendarEntry {
     private Integer idEntry;
     private Integer idTask;
     private Integer idTeam;
@@ -32,7 +32,7 @@ class GasConnectionEntry implements ICalendarEntry {
 
     private Integer idSurveyor;
     private Integer idCustomer;
-    private Address address;
-    private GasCabinetProviderType gasCabinetProvider;
+    private String address;
+    private String gasCabinetProvider;
     private String taskNo;
 }

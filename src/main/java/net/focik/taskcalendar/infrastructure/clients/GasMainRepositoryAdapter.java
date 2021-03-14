@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Optional;
 
 @Component
-public class GasMainRepositoryAdapter implements IGasMainRepository {
+class GasMainRepositoryAdapter implements IGasMainRepository {
 
     private RestTemplate restTemplate = new RestTemplate();
 

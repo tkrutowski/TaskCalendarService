@@ -1,10 +1,13 @@
 package net.focik.taskcalendar.domain;
 
 import lombok.AllArgsConstructor;
+import net.focik.taskcalendar.domain.exceptions.AddressNotExistException;
 import net.focik.taskcalendar.domain.exceptions.GasConnectionDoesNotExistException;
 import net.focik.taskcalendar.domain.exceptions.GasMainDoesNotExistException;
+import net.focik.taskcalendar.domain.port.IAddressRepository;
 import net.focik.taskcalendar.domain.port.IGasConnectionRepository;
 import net.focik.taskcalendar.domain.port.IGasMainRepository;
+import net.focik.taskcalendar.infrastructure.dto.AddressDto;
 import net.focik.taskcalendar.infrastructure.dto.EntryDto;
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
 import net.focik.taskcalendar.infrastructure.dto.GasMainDto;
@@ -16,10 +19,11 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-class EntryFactory {
+class EntryDtoFactory {
 
     IGasConnectionRepository gasConnectionRepository;
     IGasMainRepository gasMainRepository;
+    IAddressRepository addressRepository;
 
     public List<ICalendarEntry> createCalendarEntries(List<EntryDto> entryDtoList) {
         List<ICalendarEntry> calendarEntries = new ArrayList<>();
@@ -64,9 +68,12 @@ class EntryFactory {
 
     private ICalendarEntry createGasConnectionEntry(EntryDto dto) {
         Optional<GasConnectionDto> gasConnectionById = gasConnectionRepository.findGasConnectionById(dto.getIdTask());
-
         if (gasConnectionById.isEmpty())
             throw new GasConnectionDoesNotExistException(dto.getIdTask());
+
+        Optional<AddressDto> addressById = addressRepository.findAddressById(gasConnectionById.get().getIdAddress());
+        if (addressById.isEmpty())
+            throw new AddressNotExistException(gasConnectionById.get().getIdAddress());
 
         return GasConnectionEntry.builder()
                 .idEntry(dto.getIdEntry())
@@ -83,8 +90,8 @@ class EntryFactory {
                 .dateSentMailToCustomer(dto.getPostDateCustomer())
                 .idCustomer(gasConnectionById.get().getIdCustomer())
                 .idSurveyor(gasConnectionById.get().getIdSurveyor())
-                .address(new Address(gasConnectionById.get().getAddress()))
-                .gasCabinetProvider(gasConnectionById.get().getGasCabinetProvider())
+                .address(addressById.get().getFullAddress())
+                .gasCabinetProvider(gasConnectionById.get().getGasCabinetProvider().toString())
                 .taskNo(gasConnectionById.get().getTaskNo())
                 .build();
     }

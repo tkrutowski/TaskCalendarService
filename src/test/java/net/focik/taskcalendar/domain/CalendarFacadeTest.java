@@ -35,7 +35,7 @@ class CalendarFacadeTest {
 //        when(gasConnectionRepositoryMock.findGasConnectionById(2)).thenReturn(Optional.of(createGasConnectionDto_2()));
 //        when(gasConnectionRepositoryMock.findGasConnectionById(3)).thenReturn(Optional.of(createGasConnectionDto_3()));
         //given
-        int result = calendarFacade.createCalendarEntriesByDate(date).size();
+        int result = calendarFacade.getCalendarEntriesByDate(date,1).size();
 
         //then
         assertEquals(size, result);

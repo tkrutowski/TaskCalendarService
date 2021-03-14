@@ -8,5 +8,5 @@ import java.util.List;
 
 @Component
 public interface ICalendarEntryRepository {
-    List<EntryDto> GetCalendarEntriesByDate(LocalDate date);
+    List<EntryDto> GetCalendarEntriesByDate(LocalDate date, int howManyDays);
 }
