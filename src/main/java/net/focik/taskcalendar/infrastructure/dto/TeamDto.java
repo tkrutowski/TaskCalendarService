@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TeamDto {
-    private Integer id;
+    private Integer idTeam;
     private String name;
 }

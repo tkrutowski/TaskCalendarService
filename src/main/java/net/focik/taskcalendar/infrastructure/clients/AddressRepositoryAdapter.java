@@ -1,5 +1,7 @@
 package net.focik.taskcalendar.infrastructure.clients;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.focik.taskcalendar.domain.port.IAddressRepository;
 import net.focik.taskcalendar.infrastructure.dto.AddressDto;
 import net.focik.taskcalendar.infrastructure.dto.CustomerDto;
@@ -10,10 +12,12 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 public class AddressRepositoryAdapter implements IAddressRepository {
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
     //TODO dodać stałą z propertisów
-    private static final String URI = "http://localhost:8085/api/address/type/";
+    private static final String URI = "http://address-service/api/address/type/";
+
     @Override
     public Optional<AddressDto> findAddressById(Integer id) {
         AddressDto addressDto = null;

@@ -10,6 +10,7 @@ import net.focik.taskcalendar.domain.share.TaskType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,7 +25,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "tasks_calendar")
+@Table(name = "task_calendar_view")
 public class EntryDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,27 +33,28 @@ public class EntryDto {
     private Integer idEntry;
     private Integer idTask;
     private Integer idTeam;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TaskTypeConverter.class)
     private TaskType taskType;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
-    @Column(name = "mail_status_pgn")
-    @Enumerated(EnumType.STRING)
-    private MailStatus sentMailPgnStatus;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate postDatePgn;
 
-    @Column(name = "mail_status_surveyor")
-    @Enumerated(EnumType.STRING)
-    private MailStatus sentMailToSurveyorStatus;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate postDateSurveyor;
-
-    @Column(name = "mail_status_customer")
-    @Enumerated(EnumType.STRING)
-    private MailStatus sentMailToCustomerStatus;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate postDateCustomer;
+//    @Column(name = "mail_status_pgn")
+//    @Enumerated(EnumType.STRING)
+//    private MailStatus sentMailPgnStatus;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    private LocalDate postDatePgn;
+//
+//    @Column(name = "mail_status_surveyor")
+//    @Enumerated(EnumType.STRING)
+//    private MailStatus sentMailToSurveyorStatus;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    private LocalDate postDateSurveyor;
+//
+//    @Column(name = "mail_status_customer")
+//    @Enumerated(EnumType.STRING)
+//    private MailStatus sentMailToCustomerStatus;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    private LocalDate postDateCustomer;
 
     private String message;
 }

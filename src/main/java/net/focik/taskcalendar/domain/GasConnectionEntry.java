@@ -13,13 +13,14 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Builder(access = AccessLevel.PACKAGE)
-public class GasConnectionEntry implements ICalendarEntry {
+class GasConnectionEntry implements ICalendarEntry {
     private Integer idEntry;
     private Integer idTask;
     private Integer idTeam;
     private TaskType taskType;
     private LocalDate date;
     private String message;
+    private Boolean isPgn;
 
     private MailStatus sentMailPgn;
     private LocalDate dateSentMailPgn;

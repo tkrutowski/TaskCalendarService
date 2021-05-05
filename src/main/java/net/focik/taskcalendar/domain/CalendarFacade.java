@@ -2,6 +2,7 @@ package net.focik.taskcalendar.domain;
 
 import lombok.AllArgsConstructor;
 import net.focik.taskcalendar.domain.port.ICalendarEntryRepository;
+import net.focik.taskcalendar.infrastructure.dto.EntryDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,7 +16,9 @@ public class CalendarFacade {
     ICalendarEntryRepository calendarEntryRepository;
 
     public List<ICalendarEntry> getCalendarEntriesByDate(LocalDate startDate, int howManyDays ) {
-        return entryDtoFactory.createCalendarEntries(calendarEntryRepository.GetCalendarEntriesByDate(startDate, howManyDays));
+        int i=0;
+        List<EntryDto> entryDtos = calendarEntryRepository.GetCalendarEntriesByDate(startDate, howManyDays);
+        return entryDtoFactory.createCalendarEntries(entryDtos);
 
     }
 }
