@@ -16,6 +16,7 @@ class EmployeeClient {
     //TODO dodać stałą z propertisów
     private static final String URI = "http://employee-service/api/teams/";
 
+
     public Optional<TeamDto> findTeamById(Integer id) {
         TeamDto teamDto = null;
         try {

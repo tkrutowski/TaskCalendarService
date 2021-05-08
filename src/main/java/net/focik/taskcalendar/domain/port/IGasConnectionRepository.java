@@ -7,5 +7,6 @@ import java.util.Optional;
 
 @Component
 public interface IGasConnectionRepository {
+
     Optional<GasConnectionDto> findGasConnectionById(Integer id);
 }

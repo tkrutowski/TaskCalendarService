@@ -1,5 +1,7 @@
 package net.focik.taskcalendar.infrastructure.clients;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.focik.taskcalendar.domain.port.IAddressRepository;
@@ -18,7 +20,18 @@ public class AddressRepositoryAdapter implements IAddressRepository {
     //TODO dodać stałą z propertisów
     private static final String URI = "http://address-service/api/address/type/";
 
-    @Override
+    @HystrixCommand(fallbackMethod = "getFallbackAddressDto",
+            commandProperties = {
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"),
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "6"),
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50"),
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "5000")
+            },
+            threadPoolKey = "scopePool",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "20"),
+                    @HystrixProperty(name = "maxQueueSize", value = "10")
+            })
     public Optional<AddressDto> findAddressById(Integer id) {
         AddressDto addressDto = null;
         try {
@@ -30,4 +43,17 @@ public class AddressRepositoryAdapter implements IAddressRepository {
 
         return Optional.ofNullable(addressDto);
     }
+
+    
+    public Optional<AddressDto> getFallbackAddressDto(Integer id) {
+        AddressDto addressDto = new AddressDto();
+        addressDto.setCity("fallback");
+        addressDto.setCommune("fallback");
+        addressDto.setStreet("fallback");
+
+        return Optional.ofNullable(addressDto);
+    }
+
+
+
 }
