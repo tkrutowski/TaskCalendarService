@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import net.focik.taskcalendar.domain.share.GasCabinetProviderType;
 import net.focik.taskcalendar.domain.share.MailStatus;
 import net.focik.taskcalendar.domain.share.TaskType;
 

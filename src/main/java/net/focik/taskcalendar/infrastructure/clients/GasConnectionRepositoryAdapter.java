@@ -5,7 +5,6 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.focik.taskcalendar.domain.port.IGasConnectionRepository;
-import net.focik.taskcalendar.domain.share.GasCabinetProviderType;
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;

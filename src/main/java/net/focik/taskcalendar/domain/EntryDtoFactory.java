@@ -3,15 +3,13 @@ package net.focik.taskcalendar.domain;
 import lombok.AllArgsConstructor;
 import net.focik.taskcalendar.domain.exceptions.AddressNotExistException;
 import net.focik.taskcalendar.domain.exceptions.GasConnectionDoesNotExistException;
-import net.focik.taskcalendar.domain.exceptions.GasMainDoesNotExistException;
 import net.focik.taskcalendar.domain.port.IAddressRepository;
 import net.focik.taskcalendar.domain.port.IGasConnectionRepository;
 import net.focik.taskcalendar.domain.port.IGasMainRepository;
 import net.focik.taskcalendar.domain.share.TaskType;
 import net.focik.taskcalendar.infrastructure.dto.AddressDto;
-import net.focik.taskcalendar.infrastructure.dto.EntryDto;
+import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
-import net.focik.taskcalendar.infrastructure.dto.GasMainDto;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -27,10 +25,10 @@ class EntryDtoFactory {
     IGasMainRepository gasMainRepository;
     IAddressRepository addressRepository;
 
-    public List<ICalendarEntry> createCalendarEntries(List<EntryDto> entryDtoList) {
+    public List<ICalendarEntry> createCalendarEntries(List<EntryDbDto> entryDbDtoList) {
         List<ICalendarEntry> calendarEntries = new ArrayList<>();
 
-        for (EntryDto dto : entryDtoList) {
+        for (EntryDbDto dto : entryDbDtoList) {
             ICalendarEntry entry = null;
             switch (dto.getTaskType()) {
                 case GAS_CONNECTION:
@@ -47,7 +45,7 @@ class EntryDtoFactory {
         return calendarEntries;
     }
 
-    private ICalendarEntry createGasMainEntry(EntryDto dto) {
+    private ICalendarEntry createGasMainEntry(EntryDbDto dto) {
 //        Optional<GasMainDto> gasMainById = gasMainRepository.findGasMainById(dto.getIdTask());
 //
 //        if (gasMainById.isEmpty())
@@ -81,7 +79,7 @@ class EntryDtoFactory {
                 .build();
     }
 
-    private ICalendarEntry createGasConnectionEntry(EntryDto dto) {
+    private ICalendarEntry createGasConnectionEntry(EntryDbDto dto) {
         Optional<GasConnectionDto> gasConnectionById = gasConnectionRepository.findGasConnectionById(dto.getIdTask());
         if (gasConnectionById.isEmpty())
             throw new GasConnectionDoesNotExistException(dto.getIdTask());

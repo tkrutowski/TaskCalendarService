@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.focik.taskcalendar.domain.share.GasCabinetProviderType;
 import net.focik.taskcalendar.domain.share.MailStatus;
 import net.focik.taskcalendar.domain.share.TaskType;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,7 +25,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "tasks_calendar")
-public class EntryDto {
+public class EntryDbDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_entry")

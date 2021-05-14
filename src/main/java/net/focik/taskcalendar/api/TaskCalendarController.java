@@ -3,11 +3,14 @@ package net.focik.taskcalendar.api;
 import lombok.AllArgsConstructor;
 import net.focik.taskcalendar.domain.CalendarFacade;
 import net.focik.taskcalendar.domain.ICalendarEntry;
+import net.focik.taskcalendar.domain.share.MailStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,4 +32,5 @@ CalendarFacade calendarFacade;
         return new ResponseEntity<>(calendarEntriesByDate, HttpStatus.OK);
 
     }
+
 }
