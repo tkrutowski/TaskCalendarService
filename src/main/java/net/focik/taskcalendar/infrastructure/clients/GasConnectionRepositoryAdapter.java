@@ -3,6 +3,7 @@ package net.focik.taskcalendar.infrastructure.clients;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import net.focik.taskcalendar.domain.port.IGasConnectionRepository;
 import net.focik.taskcalendar.domain.share.GasCabinetProviderType;
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
+@Log4j2
 class GasConnectionRepositoryAdapter implements IGasConnectionRepository {
 
     private RestTemplate restTemplate;
@@ -39,6 +41,7 @@ class GasConnectionRepositoryAdapter implements IGasConnectionRepository {
             connectionDto = restTemplate.getForObject(URI + id+"?type=TASK_CALENDAR", GasConnectionDto.class);
         }catch (RestClientException ex){
             //TODO może rzucić wyjątek
+            log.error("GasConnectionRepositoryAdapter findGasConnectionById. Message: "+ex.getMessage());
             return Optional.empty();
         }
 
@@ -49,7 +52,7 @@ class GasConnectionRepositoryAdapter implements IGasConnectionRepository {
     public Optional<GasConnectionDto> getFallbackGasConnectionDto(Integer id) {
         GasConnectionDto connectionDto = new GasConnectionDto();
         connectionDto.setIdTask(id);
-        connectionDto.setGasCabinetProvider(GasCabinetProviderType.UNKNOW);
+        connectionDto.setGasCabinetProvider("Brak danych.");
         connectionDto.setIdAddress(0);
         return Optional.ofNullable(connectionDto);
     }

@@ -25,7 +25,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "task_calendar_view")
+@Table(name = "tasks_calendar")
 public class EntryDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,23 +38,23 @@ public class EntryDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
-//    @Column(name = "mail_status_pgn")
-//    @Enumerated(EnumType.STRING)
-//    private MailStatus sentMailPgnStatus;
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    private LocalDate postDatePgn;
-//
-//    @Column(name = "mail_status_surveyor")
-//    @Enumerated(EnumType.STRING)
-//    private MailStatus sentMailToSurveyorStatus;
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    private LocalDate postDateSurveyor;
-//
-//    @Column(name = "mail_status_customer")
-//    @Enumerated(EnumType.STRING)
-//    private MailStatus sentMailToCustomerStatus;
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    private LocalDate postDateCustomer;
+    @Column(name = "mail_status_pgn")
+    @Enumerated(EnumType.STRING)
+    private MailStatus sentMailPgnStatus;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate postDatePgn;
+
+    @Column(name = "mail_status_surveyor")
+    @Enumerated(EnumType.STRING)
+    private MailStatus sentMailToSurveyorStatus;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate postDateSurveyor;
+
+    @Column(name = "mail_status_customer")
+    @Enumerated(EnumType.STRING)
+    private MailStatus sentMailToCustomerStatus;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate postDateCustomer;
 
     private String message;
 }
