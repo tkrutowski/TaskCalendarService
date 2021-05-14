@@ -36,9 +36,11 @@ class GasConnectionRepositoryAdapter implements IGasConnectionRepository {
                     @HystrixProperty(name = "maxQueueSize", value = "10")
             })
     public Optional<GasConnectionDto> findGasConnectionById(Integer id) {
+        log.info("Try find gasconnection for  id = " + id);
         GasConnectionDto connectionDto = null;
         try {
             connectionDto = restTemplate.getForObject(URI + id+"?type=TASK_CALENDAR", GasConnectionDto.class);
+            log.info(connectionDto != null ? "Found gasconnection for id = " + id : "Not found gasconnection for id = " + id);
         }catch (RestClientException ex){
             //TODO może rzucić wyjątek
             log.error("GasConnectionRepositoryAdapter findGasConnectionById. Message: "+ex.getMessage());
