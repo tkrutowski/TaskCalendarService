@@ -19,8 +19,8 @@ class CalendarEntryRepositoryAdapter implements ICalendarEntryRepository {
 
     @Override
     public List<EntryDbDto> GetCalendarEntriesByDate(LocalDate date, int howManyDays) {
-        log.info("Get data form db between "+date + " and " + date.plusDays(howManyDays));
-        List<EntryDbDto> allByDateBetweenOrderByDate = calendarDtoRepository.findAllByDateBetweenOrderByDate(date, date.plusDays(howManyDays));
+        log.info("Get data form db between "+date + " and " + date.plusDays(howManyDays-1));
+        List<EntryDbDto> allByDateBetweenOrderByDate = calendarDtoRepository.findAllByDateBetweenOrderByDate(date, date.plusDays(howManyDays-1));
         log.info("Found: "+ allByDateBetweenOrderByDate.size());
         return allByDateBetweenOrderByDate;
     }

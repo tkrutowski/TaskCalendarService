@@ -1,5 +1,6 @@
 package net.focik.taskcalendar.domain.port;
 
+import net.focik.taskcalendar.domain.share.TaskType;
 import net.focik.taskcalendar.infrastructure.dto.AddressDto;
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
 import org.springframework.stereotype.Component;

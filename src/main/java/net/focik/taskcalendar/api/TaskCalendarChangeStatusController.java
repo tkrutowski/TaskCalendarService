@@ -27,7 +27,7 @@ public class TaskCalendarChangeStatusController {
 
 
     @PutMapping("customer/{id}")
-    @CrossOrigin
+//    @CrossOrigin
     public ResponseEntity<Boolean> changeMailStausCustomer(@PathVariable("id") Integer idEntry, @RequestParam("status") MailStatus mailStatus, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
         Boolean result = notificationStatusService.updateMailStatus(idEntry, mailStatus, updateDate, NotificationClient.CUSTOMER);
         log.info("Update CalendarEntry - customer ID = "+ idEntry+ ", MAIL_STATUS = "+mailStatus+", date = "+updateDate);
@@ -35,7 +35,7 @@ public class TaskCalendarChangeStatusController {
     }
 
     @PutMapping("surveyor/{id}")
-    @CrossOrigin
+//    @CrossOrigin
     public ResponseEntity<Boolean> changeMailStausSurveyor(@PathVariable("id") Integer idEntry, @RequestParam("status") MailStatus mailStatus, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
         Boolean result = notificationStatusService.updateMailStatus(idEntry, mailStatus, updateDate, NotificationClient.SURVEYOR);
         log.info("Update CalendarEntry - surveyor ID = "+ idEntry+ ", MAIL_STATUS = "+mailStatus+", date = "+updateDate);
@@ -43,7 +43,7 @@ public class TaskCalendarChangeStatusController {
     }
 
     @PutMapping("pgn/{id}")
-    @CrossOrigin
+//    @CrossOrigin
     public ResponseEntity<Boolean> changeMailStausPgn(@PathVariable("id") Integer idEntry, @RequestParam("status") MailStatus mailStatus, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
         Boolean result = notificationStatusService.updateMailStatus(idEntry, mailStatus, updateDate, NotificationClient.PGN);
         log.info("Update CalendarEntry - pgn ID = "+ idEntry+ ", MAIL_STATUS = "+mailStatus+", date = "+updateDate);

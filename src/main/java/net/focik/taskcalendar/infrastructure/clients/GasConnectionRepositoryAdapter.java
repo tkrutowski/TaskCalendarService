@@ -24,7 +24,7 @@ class GasConnectionRepositoryAdapter implements IGasConnectionRepository {
 
     @HystrixCommand(fallbackMethod = "getFallbackGasConnectionDto",
             commandProperties = {
-                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"),
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "4000"),
                     @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "6"),
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50"),
                     @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "5000")
@@ -35,14 +35,14 @@ class GasConnectionRepositoryAdapter implements IGasConnectionRepository {
                     @HystrixProperty(name = "maxQueueSize", value = "10")
             })
     public Optional<GasConnectionDto> findGasConnectionById(Integer id) {
-        log.info("Try find gasconnection for  id = " + id);
+        log.info("TASKCALENDAR-SERVICE: Try find gasconnection for  id = " + id);
         GasConnectionDto connectionDto = null;
         try {
             connectionDto = restTemplate.getForObject(URI + id+"?type=TASK_CALENDAR", GasConnectionDto.class);
-            log.info(connectionDto != null ? "Found gasconnection for id = " + id : "Not found gasconnection for id = " + id);
+            log.info(connectionDto != null ? "TASKCALENDAR-SERVICE: Found gasconnection for id = " + id : "TASKCALENDAR-SERVICE: Not found gasconnection for id = " + id);
         }catch (RestClientException ex){
             //TODO może rzucić wyjątek
-            log.error("GasConnectionRepositoryAdapter findGasConnectionById. Message: "+ex.getMessage());
+            log.error("TASKCALENDAR-SERVICE: GasConnectionRepositoryAdapter findGasConnectionById. Message: "+ex.getMessage());
             return Optional.empty();
         }
 
@@ -53,8 +53,8 @@ class GasConnectionRepositoryAdapter implements IGasConnectionRepository {
     public Optional<GasConnectionDto> getFallbackGasConnectionDto(Integer id) {
         GasConnectionDto connectionDto = new GasConnectionDto();
         connectionDto.setIdTask(id);
-        connectionDto.setGasCabinetProvider("Brak danych.");
-        connectionDto.setIdAddress(0);
+        connectionDto.setGasCabinetProvider("Brak danych - fallback");
+        connectionDto.setAddress("Brak danych - fallback");
         return Optional.ofNullable(connectionDto);
     }
 }
