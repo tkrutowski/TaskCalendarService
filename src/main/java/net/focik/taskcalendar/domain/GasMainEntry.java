@@ -24,6 +24,6 @@ class GasMainEntry implements ICalendarEntry{
     private LocalDate dateSentMailToSurveyor;
 
     private Integer idSurveyor;
-    private Address address;
+    private String address;
     private String taskNo;
 }

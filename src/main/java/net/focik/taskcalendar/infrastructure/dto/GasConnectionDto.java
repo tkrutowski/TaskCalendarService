@@ -16,5 +16,5 @@ public class GasConnectionDto {
     private String taskNo;
     private Boolean isPgn;
     private String gasCabinetProvider;
-    private Integer idAddress;
+    private String address;
 }

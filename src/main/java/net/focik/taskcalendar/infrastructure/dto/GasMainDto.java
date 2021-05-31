@@ -13,5 +13,5 @@ public class GasMainDto {
     private Integer idTask;
     private Integer idSurveyor;
     private String taskNo;
-    private AddressDto address;
+    private String address;
 }
