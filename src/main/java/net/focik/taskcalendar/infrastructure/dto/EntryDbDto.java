@@ -24,16 +24,21 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "tasks_calendar")
+@Table(name = "kalendarz_zadania")
+//@Table(name = "tasks_calendar")
 public class EntryDbDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_entry")
+    @Column(name = "id_wpisu")
     private Integer idEntry;
+    @Column(name = "id_zadania")
     private Integer idTask;
+    @Column(name = "id_brygady")
     private Integer idTeam;
+    @Column(name = "rodzaj_zadania")
     @Convert(converter = TaskTypeConverter.class)
     private TaskType taskType;
+    @Column(name = "data")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
@@ -55,5 +60,6 @@ public class EntryDbDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate postDateCustomer;
 
+    @Column(name = "info")
     private String message;
 }
