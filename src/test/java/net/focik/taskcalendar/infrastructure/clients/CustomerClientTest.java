@@ -19,15 +19,15 @@ class CustomerClientTest {
     @Autowired
     CustomerClient customerClient;
 
-    @Test
-    void findCusyomerById() {
-        //when
-        final Integer id = 1;
-
-        //given
-        CustomerDto customerDto = customerClient.findById(id).get();
-
-        //then
-        assertEquals(id, customerDto.getId());
-    }
+//    @Test
+//    void findCusyomerById() {
+//        //when
+//        final Integer id = 1;
+//
+//        //given
+//        CustomerDto customerDto = customerClient.findById(id).get();
+//
+//        //then
+//        assertEquals(id, customerDto.getId());
+//    }
 }
