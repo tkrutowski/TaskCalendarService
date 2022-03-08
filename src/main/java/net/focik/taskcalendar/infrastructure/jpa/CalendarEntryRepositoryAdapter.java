@@ -2,7 +2,7 @@ package net.focik.taskcalendar.infrastructure.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-import net.focik.taskcalendar.domain.port.ICalendarEntryRepository;
+import net.focik.taskcalendar.domain.port.secondary.ICalendarEntryRepository;
 import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ class CalendarEntryRepositoryAdapter implements ICalendarEntryRepository {
 
     @Override
     public List<EntryDbDto> GetCalendarEntriesByDate(LocalDate date, int howManyDays) {
-        log.info("Get data form db between "+date + " and " + date.plusDays(howManyDays-1));
+        log.info("CalendarEntryRepositoryAdapter: Try find CalendarEntry in db between "+date + " and " + date.plusDays(howManyDays-1));
         List<EntryDbDto> allByDateBetweenOrderByDate = calendarDtoRepository.findAllByDateBetweenOrderByDate(date, date.plusDays(howManyDays-1));
         log.info("Found: "+ allByDateBetweenOrderByDate.size());
         return allByDateBetweenOrderByDate;
@@ -27,13 +27,23 @@ class CalendarEntryRepositoryAdapter implements ICalendarEntryRepository {
 
     @Override
     public Optional<EntryDbDto> GetCalendarEntry(int idEntry) {
-        log.info("GetCalendarEntry form db ID = "+ idEntry);
-        return calendarDtoRepository.findById(idEntry);
+        log.info("GetCalendarEntriesByDate: Try find CalendarEntry in db by ID = "+ idEntry);
+        Optional<EntryDbDto> byId = calendarDtoRepository.findById(idEntry);
+
+        if (byId.isPresent()) {
+            log.info("Found:CalendarEntry in db by ID = " + idEntry);
+        } else {
+            log.info("NOT Found:CalendarEntry in db by ID = " + idEntry);
+        }
+
+        return byId;
     }
 
     @Override
     public EntryDbDto save(EntryDbDto entryDto) {
-        log.info("Save CalendarEntry into db ID = "+ entryDto.getIdEntry());
-        return calendarDtoRepository.save(entryDto);
+        log.info("GetCalendarEntriesByDate: Try save CalendarEntry into db ID = "+ entryDto.getIdEntry());
+        EntryDbDto saved = calendarDtoRepository.save(entryDto);
+        log.info("GetCalendarEntriesByDate: Saved CalendarEntry into db ID = "+ entryDto.getIdEntry());
+        return saved;
     }
 }

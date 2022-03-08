@@ -1,4 +1,4 @@
-package net.focik.taskcalendar.domain.port;
+package net.focik.taskcalendar.domain.port.secondary;
 
 import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import org.springframework.stereotype.Component;

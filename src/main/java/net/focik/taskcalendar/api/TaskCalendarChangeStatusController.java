@@ -8,6 +8,7 @@ import net.focik.taskcalendar.domain.share.NotificationClient;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,25 +27,25 @@ public class TaskCalendarChangeStatusController {
     NotificationStatusService notificationStatusService;
 
 
-    @PutMapping("customer/{id}")
 //    @CrossOrigin
-    public ResponseEntity<Boolean> changeMailStausCustomer(@PathVariable("id") Integer idEntry, @RequestParam("status") MailStatus mailStatus, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
+    @PutMapping("customer/{id}")
+    public ResponseEntity<Boolean> changeMailStausCustomer(@PathVariable("id") Integer idEntry,  @RequestParam("status") MailStatus mailStatus,@Nullable @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
         Boolean result = notificationStatusService.updateMailStatus(idEntry, mailStatus, updateDate, NotificationClient.CUSTOMER);
         log.info("Update CalendarEntry - customer ID = "+ idEntry+ ", MAIL_STATUS = "+mailStatus+", date = "+updateDate);
         return new ResponseEntity<>(result, result? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("surveyor/{id}")
 //    @CrossOrigin
-    public ResponseEntity<Boolean> changeMailStausSurveyor(@PathVariable("id") Integer idEntry, @RequestParam("status") MailStatus mailStatus, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
+    @PutMapping("surveyor/{id}")
+    public ResponseEntity<Boolean> changeMailStausSurveyor(@PathVariable("id") Integer idEntry,  @RequestParam("status") MailStatus mailStatus,@Nullable @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
         Boolean result = notificationStatusService.updateMailStatus(idEntry, mailStatus, updateDate, NotificationClient.SURVEYOR);
         log.info("Update CalendarEntry - surveyor ID = "+ idEntry+ ", MAIL_STATUS = "+mailStatus+", date = "+updateDate);
         return new ResponseEntity<>(result, result? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("pgn/{id}")
 //    @CrossOrigin
-    public ResponseEntity<Boolean> changeMailStausPgn(@PathVariable("id") Integer idEntry, @RequestParam("status") MailStatus mailStatus, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
+    @PutMapping("pgn/{id}")
+    public ResponseEntity<Boolean> changeMailStausPgn(@PathVariable("id") Integer idEntry, @RequestParam("status") MailStatus mailStatus,@Nullable @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updateDate){
         Boolean result = notificationStatusService.updateMailStatus(idEntry, mailStatus, updateDate, NotificationClient.PGN);
         log.info("Update CalendarEntry - pgn ID = "+ idEntry+ ", MAIL_STATUS = "+mailStatus+", date = "+updateDate);
         return new ResponseEntity<>(result, result? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);

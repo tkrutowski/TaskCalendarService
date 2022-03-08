@@ -1,14 +1,13 @@
 package net.focik.taskcalendar.domain;
 
 import lombok.AllArgsConstructor;
-import net.focik.taskcalendar.domain.port.ICalendarEntryRepository;
+import net.focik.taskcalendar.domain.port.secondary.ICalendarEntryRepository;
 import net.focik.taskcalendar.domain.share.MailStatus;
 import net.focik.taskcalendar.domain.share.NotificationClient;
 import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service

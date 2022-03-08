@@ -1,13 +1,14 @@
 package net.focik.taskcalendar.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.focik.taskcalendar.domain.exceptions.AddressNotExistException;
 import net.focik.taskcalendar.domain.exceptions.GasConnectionDoesNotExistException;
 import net.focik.taskcalendar.domain.exceptions.GasMainDoesNotExistException;
-import net.focik.taskcalendar.domain.port.IAddressRepository;
-import net.focik.taskcalendar.domain.port.IGasConnectionRepository;
-import net.focik.taskcalendar.domain.port.IGasMainRepository;
-import net.focik.taskcalendar.domain.share.TaskType;
+import net.focik.taskcalendar.domain.port.secondary.IAddressRepository;
+import net.focik.taskcalendar.domain.port.secondary.ICalendarEntryRepository;
+import net.focik.taskcalendar.domain.port.secondary.IGasConnectionRepository;
+import net.focik.taskcalendar.domain.port.secondary.IGasMainRepository;
 import net.focik.taskcalendar.infrastructure.dto.AddressDto;
 import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
@@ -20,14 +21,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 class EntryDtoFactory {
 
-    IGasConnectionRepository gasConnectionRepository;
-    IGasMainRepository gasMainRepository;
-    IAddressRepository addressRepository;
+    private final IGasConnectionRepository gasConnectionRepository;
+    private final IGasMainRepository gasMainRepository;
+    private final ICalendarEntryRepository calendarEntryRepository;
 
-    public List<ICalendarEntry> createCalendarEntries(List<EntryDbDto> entryDbDtoList) {
+    public List<ICalendarEntry> createCalendarEntries(LocalDate startDate, int howManyDays) {
+        List<EntryDbDto> entryDbDtos = calendarEntryRepository.GetCalendarEntriesByDate(startDate, howManyDays);
+
+        return createCalendarEntries(entryDbDtos);
+    }
+
+    private List<ICalendarEntry>  createCalendarEntries(List<EntryDbDto> entryDbDtoList) {
         List<ICalendarEntry> calendarEntries = new ArrayList<>();
 
         for (EntryDbDto dto : entryDbDtoList) {
@@ -67,13 +74,13 @@ class EntryDtoFactory {
                 .build();
 
     }
-
-    private Optional<AddressDto> getAddressDto(Integer idAddress) {
-        Optional<AddressDto> addressById = addressRepository.findAddressById(idAddress);
-        if (addressById.isEmpty())
-            throw new AddressNotExistException(idAddress);
-        return addressById;
-    }
+//
+//    private Optional<AddressDto> getAddressDto(Integer idAddress) {
+//        Optional<AddressDto> addressById = addressRepository.findAddressById(idAddress);
+//        if (addressById.isEmpty())
+//            throw new AddressNotExistException(idAddress);
+//        return addressById;
+//    }
 
     private Optional<GasMainDto> getGasMainDto(EntryDbDto dto) {
         Optional<GasMainDto> gasMainById = gasMainRepository.findGasMainById(dto.getIdTask());
@@ -116,4 +123,5 @@ class EntryDtoFactory {
             throw new GasConnectionDoesNotExistException(dto.getIdTask());
         return gasConnectionById;
     }
+
 }

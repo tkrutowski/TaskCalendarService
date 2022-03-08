@@ -1,4 +1,4 @@
-package net.focik.taskcalendar.domain.port;
+package net.focik.taskcalendar.domain.port.secondary;
 
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
 import net.focik.taskcalendar.infrastructure.dto.GasMainDto;
