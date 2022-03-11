@@ -4,43 +4,38 @@ import lombok.AllArgsConstructor;
 import net.focik.taskcalendar.domain.port.secondary.ICalendarEntryRepository;
 import net.focik.taskcalendar.domain.share.MailStatus;
 import net.focik.taskcalendar.domain.share.NotificationClient;
-import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class NotificationStatusService {
+class NotificationStatusService {
 
-    ICalendarEntryRepository calendarEntryRepository;
+    private final ICalendarEntryRepository calendarEntryRepository;
+    private final CalendarEntryFactory factory;
 
 
     public Boolean updateMailStatus(Integer idEntry, MailStatus mailStatus, LocalDate updateDate, NotificationClient notificationClient) {
-        Optional<EntryDbDto> entryDbDto = calendarEntryRepository.GetCalendarEntry(idEntry);
 
-        if(entryDbDto.isEmpty())
-            return false;
-
-        EntryDbDto entryDto = entryDbDto.get();
+        ICalendarEntry calendarEntry = factory.createCalendarEntry(idEntry);
 
         switch (notificationClient) {
             case CUSTOMER:
-                entryDto.setSentMailToCustomerStatus(mailStatus);
-                entryDto.setPostDateCustomer(updateDate);
+                calendarEntry.setSentMailToCustomerStatus(mailStatus);
+                calendarEntry.setPostDateCustomer(updateDate);
                 break;
             case SURVEYOR:
-                entryDto.setSentMailToSurveyorStatus(mailStatus);
-                entryDto.setPostDateSurveyor(updateDate);
+                calendarEntry.setSentMailToSurveyorStatus(mailStatus);
+                calendarEntry.setPostDateSurveyor(updateDate);
                 break;
             case PGN:
-                entryDto.setSentMailPgnStatus(mailStatus);
-                entryDto.setPostDatePgn(updateDate);
+                calendarEntry.setSentMailPgnStatus(mailStatus);
+                calendarEntry.setPostDatePgn(updateDate);
                 break;
         }
 
-        calendarEntryRepository.save(entryDto);
+        calendarEntryRepository.save(calendarEntry);
 
         return true;
     }
