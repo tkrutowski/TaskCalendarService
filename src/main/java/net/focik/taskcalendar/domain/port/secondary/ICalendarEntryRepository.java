@@ -1,5 +1,6 @@
 package net.focik.taskcalendar.domain.port.secondary;
 
+import net.focik.taskcalendar.domain.ICalendarEntry;
 import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +10,11 @@ import java.util.Optional;
 
 @Component
 public interface ICalendarEntryRepository {
-    List<EntryDbDto> GetCalendarEntriesByDate(LocalDate date, int howManyDays);
-    Optional<EntryDbDto> GetCalendarEntry(int idEntry);
+    List<EntryDbDto> getCalendarEntriesByDate(LocalDate date, int howManyDays);
 
-    EntryDbDto save(EntryDbDto entryDto);
+    Integer save(ICalendarEntry entry);
 
+    Optional<EntryDbDto> getCalendarEntryById(int idEntry);
+
+//    EntryDbDto save(EntryDbDto entryDto);
 }
