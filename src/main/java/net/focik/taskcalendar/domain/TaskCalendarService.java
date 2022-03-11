@@ -1,30 +1,33 @@
 package net.focik.taskcalendar.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.focik.taskcalendar.domain.port.secondary.ICalendarEntryRepository;
 import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-public class TaskCalendarService {
+@RequiredArgsConstructor
+class TaskCalendarService {
 
-    ICalendarEntryRepository calendarEntryRepository;
+    private final CalendarEntryFactory calendarEntryFactory;
+    private final ICalendarEntryRepository calendarEntryRepository;
 
+    public List<ICalendarEntry> getCalendarEntriesByDate(LocalDate startDate, int howManyDays ) {
+        return calendarEntryFactory.createCalendarEntries(startDate, howManyDays);
+
+    }
 
     public Boolean saveInfoMsg(Integer idEntry, String msg) {
-        Optional<EntryDbDto> entryDbDto = calendarEntryRepository.GetCalendarEntry(idEntry);
+        ICalendarEntry calendarEntry = calendarEntryFactory.createCalendarEntry(idEntry);
 
-        if(entryDbDto.isEmpty())
-            return false;
+        calendarEntry.changeMessage(msg);
 
-        EntryDbDto entryDto = entryDbDto.get();
-
-        entryDto.setMessage(msg);
-
-        calendarEntryRepository.save(entryDto);
+        calendarEntryRepository.save(calendarEntry);
 
         return true;
     }

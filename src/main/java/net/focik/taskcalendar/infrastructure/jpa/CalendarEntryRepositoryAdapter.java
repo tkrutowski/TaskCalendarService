@@ -1,9 +1,11 @@
 package net.focik.taskcalendar.infrastructure.jpa;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import net.focik.taskcalendar.domain.ICalendarEntry;
 import net.focik.taskcalendar.domain.port.secondary.ICalendarEntryRepository;
 import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
+import net.focik.taskcalendar.infrastructure.mapper.JpaMapper;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -11,14 +13,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Log
 class CalendarEntryRepositoryAdapter implements ICalendarEntryRepository {
 
-    private ITaskCalendarDtoRepository calendarDtoRepository;
+    private final ITaskCalendarDtoRepository calendarDtoRepository;
+    private final JpaMapper jpaMapper;
 
     @Override
-    public List<EntryDbDto> GetCalendarEntriesByDate(LocalDate date, int howManyDays) {
+    public List<EntryDbDto> getCalendarEntriesByDate(LocalDate date, int howManyDays) {
         log.info("CalendarEntryRepositoryAdapter: Try find CalendarEntry in db between "+date + " and " + date.plusDays(howManyDays-1));
         List<EntryDbDto> allByDateBetweenOrderByDate = calendarDtoRepository.findAllByDateBetweenOrderByDate(date, date.plusDays(howManyDays-1));
         log.info("Found: "+ allByDateBetweenOrderByDate.size());
@@ -26,7 +29,7 @@ class CalendarEntryRepositoryAdapter implements ICalendarEntryRepository {
     }
 
     @Override
-    public Optional<EntryDbDto> GetCalendarEntry(int idEntry) {
+    public Optional<EntryDbDto> getCalendarEntryById(int idEntry) {
         log.info("GetCalendarEntriesByDate: Try find CalendarEntry in db by ID = "+ idEntry);
         Optional<EntryDbDto> byId = calendarDtoRepository.findById(idEntry);
 
@@ -40,10 +43,11 @@ class CalendarEntryRepositoryAdapter implements ICalendarEntryRepository {
     }
 
     @Override
-    public EntryDbDto save(EntryDbDto entryDto) {
-        log.info("GetCalendarEntriesByDate: Try save CalendarEntry into db ID = "+ entryDto.getIdEntry());
-        EntryDbDto saved = calendarDtoRepository.save(entryDto);
-        log.info("GetCalendarEntriesByDate: Saved CalendarEntry into db ID = "+ entryDto.getIdEntry());
-        return saved;
+    public Integer save(ICalendarEntry entry) {
+
+        log.info("GetCalendarEntriesByDate: Try save CalendarEntry into db ID = "+ entry.getIdEntry());
+        EntryDbDto saved = calendarDtoRepository.save(jpaMapper.toDto(entry));
+        log.info("GetCalendarEntriesByDate: Saved CalendarEntry into db ID = "+ entry.getIdEntry());
+        return saved.getIdEntry();
     }
 }

@@ -1,30 +1,24 @@
 package net.focik.taskcalendar.infrastructure.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.focik.taskcalendar.domain.share.MailStatus;
 import net.focik.taskcalendar.domain.share.TaskType;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "kalendarz_zadania")
+@Table(name = "TaskCalendar_VIEW")
 //@Table(name = "tasks_calendar")
-public class EntryDbDto {
+public class EntryQueryDbDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_wpisu")
@@ -60,4 +54,17 @@ public class EntryDbDto {
 
     @Column(name = "info")
     private String message;
+
+    @Column(name = "id_geodety_projekt")
+    private Integer idSurveyor;
+    @Column(name = "id_klienta")
+    private Integer idCustomer;
+    private String address;
+    @Column(name = "szafka")
+    private String gasCabinetProvider;
+    @Column(name = "nr_zadania")
+    private String taskNo;
+    @Column(name = "is_pgn")
+    private Boolean isPgn;
+
 }
