@@ -1,15 +1,12 @@
 package net.focik.taskcalendar.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import net.focik.taskcalendar.domain.exceptions.AddressNotExistException;
+import net.focik.taskcalendar.domain.exceptions.CalendarEntryDoesNotExistException;
 import net.focik.taskcalendar.domain.exceptions.GasConnectionDoesNotExistException;
 import net.focik.taskcalendar.domain.exceptions.GasMainDoesNotExistException;
-import net.focik.taskcalendar.domain.port.secondary.IAddressRepository;
 import net.focik.taskcalendar.domain.port.secondary.ICalendarEntryRepository;
 import net.focik.taskcalendar.domain.port.secondary.IGasConnectionRepository;
 import net.focik.taskcalendar.domain.port.secondary.IGasMainRepository;
-import net.focik.taskcalendar.infrastructure.dto.AddressDto;
 import net.focik.taskcalendar.infrastructure.dto.EntryDbDto;
 import net.focik.taskcalendar.infrastructure.dto.GasConnectionDto;
 import net.focik.taskcalendar.infrastructure.dto.GasMainDto;
@@ -22,31 +19,39 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-class EntryDtoFactory {
+class CalendarEntryFactory {
 
     private final IGasConnectionRepository gasConnectionRepository;
     private final IGasMainRepository gasMainRepository;
     private final ICalendarEntryRepository calendarEntryRepository;
 
     public List<ICalendarEntry> createCalendarEntries(LocalDate startDate, int howManyDays) {
-        List<EntryDbDto> entryDbDtos = calendarEntryRepository.GetCalendarEntriesByDate(startDate, howManyDays);
+        List<EntryDbDto> entryDbDtos = calendarEntryRepository.getCalendarEntriesByDate(startDate, howManyDays);
 
         return createCalendarEntries(entryDbDtos);
     }
+
+    public ICalendarEntry createCalendarEntry(int entryID) {
+        Optional<EntryDbDto> entryDbDto = calendarEntryRepository.getCalendarEntryById(entryID);
+
+        if(entryDbDto.isEmpty())
+            throw new CalendarEntryDoesNotExistException(entryID);
+
+        return createCalendarEntry(entryDbDto.get());
+    }
+
+
+    private ICalendarEntry  createCalendarEntry(EntryDbDto entryDbDto) {
+        return getCalendarEntry(entryDbDto);
+    }
+
+
 
     private List<ICalendarEntry>  createCalendarEntries(List<EntryDbDto> entryDbDtoList) {
         List<ICalendarEntry> calendarEntries = new ArrayList<>();
 
         for (EntryDbDto dto : entryDbDtoList) {
-            ICalendarEntry entry = null;
-            switch (dto.getTaskType()) {
-                case GAS_CONNECTION:
-                    entry = createGasConnectionEntry(dto);
-                    break;
-                case GAS_MAIN:
-                    entry = createGasMainEntry(dto);
-                    break;
-            }
+            ICalendarEntry entry = getCalendarEntry(dto);
             if (entry != null)
                 calendarEntries.add(entry);
         }
@@ -54,10 +59,21 @@ class EntryDtoFactory {
         return calendarEntries;
     }
 
+    private ICalendarEntry getCalendarEntry(EntryDbDto entryDbDto) {
+        ICalendarEntry entry = null;
+        switch (entryDbDto.getTaskType()) {
+            case GAS_CONNECTION:
+                entry = createGasConnectionEntry(entryDbDto);
+                break;
+            case GAS_MAIN:
+                entry = createGasMainEntry(entryDbDto);
+                break;
+        }
+        return entry;
+    }
+
     private ICalendarEntry createGasMainEntry(EntryDbDto dto) {
         Optional<GasMainDto> gasMainById = getGasMainDto(dto);
-
-       // Optional<AddressDto> addressById = getAddressDto(gasMainById.get().getIdAddress());
 
         return GasMainEntry.builder()
                 .idEntry(dto.getIdEntry())
@@ -74,13 +90,6 @@ class EntryDtoFactory {
                 .build();
 
     }
-//
-//    private Optional<AddressDto> getAddressDto(Integer idAddress) {
-//        Optional<AddressDto> addressById = addressRepository.findAddressById(idAddress);
-//        if (addressById.isEmpty())
-//            throw new AddressNotExistException(idAddress);
-//        return addressById;
-//    }
 
     private Optional<GasMainDto> getGasMainDto(EntryDbDto dto) {
         Optional<GasMainDto> gasMainById = gasMainRepository.findGasMainById(dto.getIdTask());
@@ -92,8 +101,6 @@ class EntryDtoFactory {
 
     private ICalendarEntry createGasConnectionEntry(EntryDbDto dto) {
         Optional<GasConnectionDto> gasConnectionById =  getGasConnectionDto(dto);
-
-       // Optional<AddressDto> addressById = getAddressDto(gasConnectionById.get().getIdAddress());
 
         return GasConnectionEntry.builder()
                 .idEntry(dto.getIdEntry())
@@ -108,10 +115,9 @@ class EntryDtoFactory {
                 .dateSentMailToSurveyor(dto.getPostDateSurveyor())
                 .sentMailToCustomer(dto.getSentMailToCustomerStatus())
                 .dateSentMailToCustomer(dto.getPostDateCustomer())
-                .idCustomer(gasConnectionById.get().getIdCustomer())
                 .idSurveyor(gasConnectionById.get().getIdSurveyor())
                 .address(gasConnectionById.get().getAddress())
-                .gasCabinetProvider(gasConnectionById.get().getGasCabinetProvider().toString())
+                .gasCabinetProvider(gasConnectionById.get().getGasCabinetProvider())
                 .taskNo(gasConnectionById.get().getTaskNo())
                 .isPgn(gasConnectionById.get().getIsPgn())
                 .build();
