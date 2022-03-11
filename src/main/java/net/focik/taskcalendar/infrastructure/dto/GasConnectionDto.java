@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class GasConnectionDto {
     private Integer idTask;
-    private Integer idCustomer;
     private Integer idSurveyor;
     private String taskNo;
     private Boolean isPgn;
