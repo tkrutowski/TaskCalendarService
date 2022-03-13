@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "TaskCalendar_VIEW")
+@Table(name = "TaskCalendar_VIEW_geo")
 //@Table(name = "tasks_calendar")
 public class EntryQueryDbDto {
     @Id
@@ -66,5 +66,8 @@ public class EntryQueryDbDto {
     private String taskNo;
     @Column(name = "is_pgn")
     private Boolean isPgn;
+
+    private String latitude;
+    private String longitude;
 
 }

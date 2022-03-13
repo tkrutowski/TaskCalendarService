@@ -68,6 +68,8 @@ public class QueryMapper {
                 .gasCabinetProvider(dbDto.getGasCabinetProvider())
                 .taskNo(dbDto.getTaskNo())
                 .address(dbDto.getAddress())
+                .latitude(dbDto.getLatitude())
+                .longitude(dbDto.getLongitude())
                 .build();
 
     }

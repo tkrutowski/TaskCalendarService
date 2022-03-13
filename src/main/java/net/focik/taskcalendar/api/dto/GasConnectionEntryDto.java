@@ -33,4 +33,7 @@ public class GasConnectionEntryDto implements ICalendarEntryDto {
     private String address;
     private String gasCabinetProvider;
     private String taskNo;
+
+    private String latitude;
+    private String longitude;
 }

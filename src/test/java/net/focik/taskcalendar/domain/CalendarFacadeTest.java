@@ -1,6 +1,5 @@
 package net.focik.taskcalendar.domain;
 
-import net.focik.taskcalendar.domain.port.secondary.IAddressRepository;
 import net.focik.taskcalendar.domain.port.secondary.ICalendarEntryRepository;
 import net.focik.taskcalendar.domain.port.secondary.IGasConnectionRepository;
 import net.focik.taskcalendar.domain.port.secondary.IGasMainRepository;
@@ -17,30 +16,25 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 class CalendarFacadeTest {
 
-    @Mock
-    IGasConnectionRepository gasConnectionRepositoryMock;// = mock(GasConnectionRepositoryAdapter.class);
-    @Mock
-    IGasMainRepository gasMainRepositoryMock;// = mock(GasMainRepositoryAdapter.class);
 //    @Mock
-//    IAddressRepository addressRepositoryMock;
-    @InjectMocks
-    EntryDtoFactory entryDtoFactory; //= new EntryDtoFactory(gasConnectionRepositoryMock, gasMainRepositoryMock);
-
-    @Qualifier("calendarEntryRepositoryAdapter")
-    @Autowired
-    ICalendarEntryRepository calendarEntryRepository;
+//    IGasConnectionRepository gasConnectionRepositoryMock;// = mock(GasConnectionRepositoryAdapter.class);
+//    @Mock
+//    IGasMainRepository gasMainRepositoryMock;// = mock(GasMainRepositoryAdapter.class);
+////    @Mock
+////    IAddressRepository addressRepositoryMock;
+//    @InjectMocks
+//CalendarEntryFactory calendarEntryFactory; //= new EntryDtoFactory(gasConnectionRepositoryMock, gasMainRepositoryMock);
+//
+//    @Qualifier("calendarEntryRepositoryAdapter")
+//    @Autowired
+//    ICalendarEntryRepository calendarEntryRepository;
 
 //    @Autowired
 //    CalendarFacade calendarFacade;
@@ -73,7 +67,6 @@ class CalendarFacadeTest {
         dto.setIdTask(1);
         dto.setAddress("");
         dto.setGasCabinetProvider("Klient");
-        dto.setIdCustomer(1);
         dto.setIdSurveyor(1);
         return dto;
     }
@@ -83,7 +76,6 @@ class CalendarFacadeTest {
         dto.setIdTask(1);
         dto.setAddress("");
         dto.setGasCabinetProvider("Progas");
-        dto.setIdCustomer(1);
         dto.setIdSurveyor(1);
         return dto;
     }
@@ -93,7 +85,6 @@ class CalendarFacadeTest {
         dto.setIdTask(1);
         dto.setAddress("");
         dto.setGasCabinetProvider("PSG");
-        dto.setIdCustomer(1);
         dto.setIdSurveyor(1);
         return dto;
     }

@@ -32,6 +32,9 @@ public class GasConnectionEntry implements ICalendarEntry {
     private String gasCabinetProvider;
     private String taskNo;
 
+    private String latitude;
+    private String longitude;
+
     @Override
     public void changeMessage(String msg) {
         message = msg;
