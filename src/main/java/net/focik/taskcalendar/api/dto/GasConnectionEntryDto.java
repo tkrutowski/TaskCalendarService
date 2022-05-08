@@ -36,4 +36,9 @@ public class GasConnectionEntryDto implements ICalendarEntryDto {
 
     private String latitude;
     private String longitude;
+
+    @Override
+    public int getTeamID() {
+        return idTeam;
+    }
 }

@@ -27,6 +27,7 @@ public class TaskCalendarController {
     private final ApiMapper apiMapper;
 
     @GetMapping("week")
+    //@PreAuthorize("hasAnyAuthority('TASK_CALENDAR_READ','TASK_CALENDAR_READ_ALL')")
     public ResponseEntity<List<ICalendarEntryDto>> getCalendarEntryByWeek(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate){
         log.info("TASKCALENDAR-SERVIE: Try get CalendarEntry between "+startDate + " and " + startDate.plusDays(HOW_MANY_DAYS-1));
 

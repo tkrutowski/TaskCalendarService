@@ -17,4 +17,8 @@ public class QueryCalendarFacade {
 
         return calendarService.getCalendarEntriesByDate(startDate, howManyDays);
     }
+
+    public List<ICalendarEntryDto> getCalendarEntriesByDateAndIdTeam(LocalDate startDate, int how_many_days, int idTeam) {
+        return calendarService.getCalendarEntriesByDateAndIdTeam(startDate, how_many_days, idTeam);
+    }
 }

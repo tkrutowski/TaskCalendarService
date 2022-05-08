@@ -33,4 +33,14 @@ public class TaskCalendarQueryController {
 
     }
 
+        @GetMapping("week/{id}")
+        public ResponseEntity<List<ICalendarEntryDto>> getCalendarEntryByWeekAndIdTeam(@PathVariable int id, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate){
+            int i=0;
+            log.info("TASKCALENDAR-SERVIE: Try get CalendarEntry between "+startDate + " and " + startDate.plusDays(HOW_MANY_DAYS-1));
+
+            List<ICalendarEntryDto> calendarEntriesByDate = queryCalendarFacade.getCalendarEntriesByDateAndIdTeam(startDate, HOW_MANY_DAYS, id);
+            return new ResponseEntity<>(calendarEntriesByDate, HttpStatus.OK);
+
+        }
+
 }

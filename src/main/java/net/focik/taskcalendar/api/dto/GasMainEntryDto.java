@@ -24,4 +24,9 @@ public class GasMainEntryDto implements ICalendarEntryDto {
     private Integer idSurveyor;
     private String address;
     private String taskNo;
+
+    @Override
+    public int getTeamID() {
+        return idTeam;
+    }
 }
